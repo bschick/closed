@@ -1,18 +1,25 @@
 const sodium = require('libsodium-wrappers');
 const { createInterface } = require('node:readline/promises');
 
-console.log('closed1 ', process.stdin.closed);
-const rl = createInterface({ input: process.stdin, output: process.stdout });
-console.log('closed2 ', process.stdin.closed);
+async function ready(arg) {
+   if(arg === 'before') {
+      console.log('closed_before1 ', process.stdin.closed);
+      const rl = createInterface({ input: process.stdin, output: process.stdout });
+      console.log('closed_before2 ', process.stdin.closed);
+   }
 
-
-async function ready() {
-   console.log('closed3 ', process.stdin.closed);
+   console.log('closed_ready1 ', process.stdin.closed);
    await sodium.ready;
-   console.log('closed4 ', process.stdin.closed);
-}
+   console.log('closed_ready2 ', process.stdin.closed);
 
-ready().then( () => {
-   console.log('closed5 ', process.stdin.closed);
-   console.log('bye');
+   if(arg === 'after') {
+      console.log('closed_after1 ', process.stdin.closed);
+      const rl = createInterface({ input: process.stdin, output: process.stdout });
+      console.log('closed_after2 ', process.stdin.closed);
+   }
+}
+ 
+const arg = process.argv[2] ?? 'before';
+ready(arg).then( () => {
+   console.log('bye ', process.stdin.closed);
 });

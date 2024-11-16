@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "esbuild --bundle --format=cjs --platform=node --target=es2022 --outfile=build/closed.cjs index.js"
+    "build": "esbuild --bundle --format=cjs --platform=node --target=es2022 --outfile=build/closed.cjs index.js",
+    "before": "echo 'hello' | node build/closed.cjs before",
+    "after": "echo 'hello' | node build/closed.cjs after",
+    "never": "echo 'hello' | node build/closed.cjs never"
   },
   "keywords": [],
   "author": "",
